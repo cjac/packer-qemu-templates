@@ -1,0 +1,38 @@
+https://github.com/jakobadam/packer-qemu-templates
+
+https://github.com/joefitzgerald/packer-windows
+
+https://hodgkins.io/best-practices-with-packer-and-windows
+
+  sudo apt-get install libvirt-system-daemon
+
+Ensure that your user has access to /dev/kvm:
+
+  $ ls -ld /dev/kvm
+  crw-rw---- 1 root kvm 10, 232 May 10 18:03 /dev/kvm
+  $ sudo adduser $USER kvm
+  [sudo] password for cjac: 
+  Adding user `cjac' to group `kvm' ...
+  Adding user cjac to group kvm
+  Done.
+  $ exit
+
+Log out to allow group inclusion to propagate to the current environment.
+
+
+Ensure that hardware virtualization is available to the guest which is running libvirt:
+
+  $ [https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM#Configuration_in_virt-manager sudo modprobe kvm-intel nested=1]
+
+Must forward X socket with ssh -Y so that qemu can show the user the frame buffer.  This is in addition to forwarding the SSH_AUTH_SOCK with -A which will be used to establish the libvirt socket (the URI in virsh --connect=URI) for connecting to the hypervisor.
+  $ ssh -AY build0
+  $ mkdir /tmp/github
+  $ cd /tmp/github
+  $ git clone git@github.com:cjac/packer-qemu-templates.git
+  $ cd packer-qemu-templates/windows
+  $ TS=$(date +"%Y%m%dT%H%M%S") \
+    PACKER_LOG=1 \
+    PACKER_LOG_PATH="${PWD}/log/packer-${TS}.log" \
+    time packer build
+                  -var-file=windows-2012-R2.json \
+                  windows-server-2012-vagrant.json

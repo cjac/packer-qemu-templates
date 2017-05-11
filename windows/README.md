@@ -1,3 +1,5 @@
+https://github.com/jakobadam/packer-qemu-templates is the upstream repo
+
 ## Windows Packer Templates
 
 * Virtio drivers are loaded on startup

@@ -2,14 +2,19 @@
 
 set -e
 
-TS=$(date +"%Y%m%dT%H%M%S")
 
 #perl gen-packer.pl > packer.json
 
-mkdir -p temp
+mkdir -p temp log
 
-TMPDIR=./temp PACKER_LOG=1 PACKER_LOG_PATH="${PWD}/log/packer-${TS}.log" time \
-          packer build -var-file=windows-2012-R2.json windows-server-2012-vagrant.json
+TMPDIR=./temp
+PACKER_LOG=1
+TS=$(date +"%Y%m%dT%H%M%S")
+PACKER_LOG_PATH="${PWD}/log/packer-${TS}.log"
+VARFILE=windows-2012-R2.json
+VAGRANT_JSON=windows-server-2012-vagrant.json
+
+time packer build -var-file="${VARFILE}" "${VAGRANT_JSON}"
 
 #git tag ${TS}
 
