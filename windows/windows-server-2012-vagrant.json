@@ -3,8 +3,12 @@
   "builders": [
     {
       "type": "qemu",
-      "disk_size": "{{ user `disk_size` }}",
+      "accelerator": "kvm",
 
+      "format": "qcow2",
+      "disk_size": "{{ user `disk_size` }}",
+      "skip_compaction": "true",
+      "disk_compression": "false",
       "floppy_files": "{{ user `floppy_files_list` }}",
 
       "headless": "{{ user `headless` }}",

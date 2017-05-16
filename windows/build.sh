@@ -2,6 +2,7 @@
 
 set -e
 
+# https://www.packer.io/docs/builders/qemu.html
 
 #perl gen-packer.pl > packer.json
 

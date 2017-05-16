@@ -1,7 +1,13 @@
 {
   "disk_size": "40960",
-  "cpus" : "2",
-  "memory" : "2048",
+  "format": "qcow2",
+  "skip_compaction": "true",
+  "disk_compression": "false",
+
+  "accelerator": "kvm",
+
+  "cpus" : "4",
+  "memory" : "4096",
   "headless": "false",
   "_comment": "Build with `packer build -var-file=windows-2012-R2-standard.json windows-vagrant.json`",
   "vm_name": "windows-2012-R2-standard",
