@@ -8,7 +8,7 @@
 
   "cpus" : "4",
   "memory" : "4096",
-  "headless": "false",
+  "headless": "true",
   "_comment": "Build with `packer build -var-file=windows-2012-R2-standard.json windows-vagrant.json`",
   "vm_name": "windows-2012-R2-standard",
   "iso_url": "file:///srv/nfs/ISOs/evalcenter/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",

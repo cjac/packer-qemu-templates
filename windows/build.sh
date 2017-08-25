@@ -9,13 +9,16 @@ set -e
 mkdir -p temp log
 
 TMPDIR=./temp
-PACKER_LOG=1
+export PACKER_LOG=1
 TS=$(date +"%Y%m%dT%H%M%S")
-PACKER_LOG_PATH="${PWD}/log/packer-${TS}.log"
+export PACKER_LOG_PATH="${PWD}/log/packer-${TS}.log"
 VARFILE=windows-2012-R2.json
 VAGRANT_JSON=windows-server-2012-vagrant.json
 
-time packer build -var-file="${VARFILE}" "${VAGRANT_JSON}"
+echo "PACKER_LOG_PATH=${PACKER_LOG_PATH}"
+echo packer build -var-file="${VARFILE}" "${VAGRANT_JSON}"
+
+time ./packer build -var-file="${VARFILE}" "${VAGRANT_JSON}"
 
 #git tag ${TS}
 

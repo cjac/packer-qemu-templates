@@ -7,8 +7,8 @@
 
       "format": "qcow2",
       "disk_size": "{{ user `disk_size` }}",
-      "skip_compaction": "true",
-      "disk_compression": "false",
+      "skip_compaction": "false",
+      "disk_compression": "true",
       "floppy_files": "{{ user `floppy_files_list` }}",
 
       "headless": "{{ user `headless` }}",
@@ -22,15 +22,15 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
 
       "communicator": "winrm",
-      "winrm_username": "windows",
-      "winrm_password": "packer",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
 
       "qemuargs": [
         [ "-m", "4048M" ],
         [ "-cpu", "Westmere" ]
       ],
-      "boot_wait": "2s",
+      "boot_wait": "10s",
       "vm_name": "{{ user `vm_name` }}",
       "qemuargs": [
         [ "-m", "{{ user `memory` }}" ],
@@ -39,23 +39,32 @@
     }
   ],
   "provisioners": [
-    {
-      "type": "windows-shell",
+    { "type": "file",
+      "source": "scripts/",
+      "destination": "c:\\packer"
+    },
+    { "type": "windows-shell",
       "scripts": [
         "scripts/unlimited-password-expiration.bat",
         "scripts/enable-rdp.bat",
         "scripts/uac-disable.bat",
-        "scripts/disablewinupdate.bat",
         "scripts/disable-hibernate.bat",
         "scripts/firewall-open-ping.bat",
         "scripts/firewall-open-rdp.bat"
       ]
     },
-
-    {
-      "type": "windows-shell",
-      "inline": ["net user windows {{ user `password`}}"]
-    }
+    { "type": "windows-shell",
+      "inline": ["net user vagrant {{ user `password`}}"]
+    },
+    { "type": "powershell",
+      "inline": [
+        "Set-ExecutionPolicy Bypass -Force; & C:\\packer\\install-chocolatey.ps1"
+      ]
+    },
+    { "type": "windows-restart" },
+    { "type": "powershell",
+      "scripts": [ "scripts/windows-update.ps1" ]
+    },
   ],
 
   "variables": {
@@ -65,7 +74,7 @@
     "headless": "false",
     "iso_checksum_type": "md5",
     "iso_checksum": "18a4f00a675b0338f3c7c93c4f131beb",
-    "iso_url": "http://download.microsoft.com/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO",
+    "iso_url": "file:///srv/nfs/ISOs/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
     "preseed" : "windows-2016-standard/*",
     "vagrantfile_template" : "vagrantfile-windows-2012-standard.template",
     "version" : "1",
