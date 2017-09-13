@@ -45,6 +45,7 @@
     },
     { "type": "windows-shell",
       "scripts": [
+        "scripts/remove-swap.bat",
         "scripts/unlimited-password-expiration.bat",
         "scripts/enable-rdp.bat",
         "scripts/uac-disable.bat",
@@ -53,18 +54,31 @@
         "scripts/firewall-open-rdp.bat"
       ]
     },
-    { "type": "windows-shell",
-      "inline": ["net user vagrant {{ user `password`}}"]
-    },
     { "type": "powershell",
       "inline": [
+	"net user vagrant {{ user `password`}}",
         "Set-ExecutionPolicy Bypass -Force; & C:\\packer\\install-chocolatey.ps1"
       ]
     },
     { "type": "windows-restart" },
     { "type": "powershell",
-      "scripts": [ "scripts/windows-update.ps1" ]
+      "inline": [
+        "choco install -y KB2919442 kb2919355",
+        "choco install -y puppet-agent"
+      ]
     },
+    { "type": "windows-restart" },
+    { "type": "powershell",
+      "inline": [
+	"puppet module install chocolatey-chocolatey",
+	"puppet module install puppetlabs-dsc"
+      ]
+    },
+    { "type": "powershell",
+      "inline": [
+        "puppet apply C:\\packer\\iotivity-build-minion.pp"
+      ]
+    }
   ],
 
   "variables": {
