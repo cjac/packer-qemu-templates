@@ -43,6 +43,11 @@
       "source": "scripts/",
       "destination": "c:\\packer"
     },
+    { "type": "powershell",
+      "scripts": [
+	  "scripts/install-cloudbase-init.ps1"
+      ]
+    },
     { "type": "windows-shell",
       "scripts": [
         "scripts/remove-swap.bat",
