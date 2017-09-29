@@ -90,7 +90,7 @@
     { "type": "windows-shell",
       "scripts": [
         "scripts/install-vs2015-amd64.ps1"
-      ],
+      ]
     }
   ],
       
