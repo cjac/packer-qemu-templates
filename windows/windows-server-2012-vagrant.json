@@ -86,9 +86,14 @@
         "puppet apply C:\\packer\\iotivity-build-minion.pp",
         "dism.exe /online /Cleanup-Image /StartComponentCleanup"
       ]
+    },
+    { "type": "windows-shell",
+      "scripts": [
+        "scripts/install-vs2015-amd64.ps1"
+      ],
     }
   ],
-
+      
   "variables": {
     "disk_size": "40960",
     "cpus" : "2",
