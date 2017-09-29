@@ -48,6 +48,7 @@
 	  "scripts/install-cloudbase-init.ps1"
       ]
     },
+    { "type": "windows-restart" },
     { "type": "windows-shell",
       "scripts": [
         "scripts/remove-swap.bat",
@@ -59,6 +60,7 @@
         "scripts/firewall-open-rdp.bat"
       ]
     },
+    { "type": "windows-restart" },
     { "type": "powershell",
       "inline": [
 	"net user vagrant {{ user `password`}}",
