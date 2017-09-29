@@ -81,7 +81,8 @@
     },
     { "type": "powershell",
       "inline": [
-        "puppet apply C:\\packer\\iotivity-build-minion.pp"
+        "puppet apply C:\\packer\\iotivity-build-minion.pp",
+        "dism.exe /online /Cleanup-Image /StartComponentCleanup"
       ]
     }
   ],
@@ -94,10 +95,10 @@
     "iso_checksum_type": "md5",
     "iso_checksum": "18a4f00a675b0338f3c7c93c4f131beb",
     "iso_url": "file:///srv/nfs/ISOs/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
-    "preseed" : "windows-2016-standard/*",
+    "preseed" : "windows-2012-R2-standard/*",
     "vagrantfile_template" : "vagrantfile-windows-2012-standard.template",
     "version" : "1",
-    "vm_name": "windows-2016",
-    "floppy_files_list" : "floppy/drivers/virtio-win-0.1.135/viostor/2k16/amd64/*,floppy/drivers/virtio-win-0.1.135/NetKVM/2k16/amd64/*,floppy/common/*,floppy/windows-2016-standard/*"
+    "vm_name": "windows-2012",
+    "floppy_files_list" : "floppy/drivers/virtio-win-0.1.135/viostor/2k12R2/amd64/*,floppy/drivers/virtio-win-0.1.135/NetKVM/2k12R2/amd64/*,floppy/common/*,floppy/windows-2012-R2-standard/*"
   }
 }
